@@ -1,10 +1,36 @@
 ﻿@model List<string>
 
-<h1>Lista</h1>
+<h1>Lista zakupów</h1>
 
-<ul>
-    @foreach (var shopDescription in Model)
-    {
-        <li>@shopDescription</li>
-    }
-</ul>
+@if (Model != null && Model.Any())
+{
+    <ul id="emailList" class="list-group">
+        @foreach (var shoppingList in Model)
+        {
+            <li class="list-group-item" id="product-@shoppingList">
+                @shoppingList
+                <form action="@Url.Action("Remove","Home", new { shoppingList = shoppingList })" method="post" class="d-inline">
+                    <input type="submit" value="Usuń" class="btn btn-danger btn-sm float-right" />
+                </form>
+                <button onclick="toggleCheck('@shoppingList')" class="btn btn-sm btn-outline-primary float-right">Check</button>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Brak danych do wyświetlenia.</p>
+}
+
+<h2>Dodaj nowy produkt</h2>
+<form method="post" asp-action="Add">
+    <div>
+        <label for="Description">Opis produktu:</label>
+        <input type="text" id="Description" name="Description" required />
+    </div>
+    <div>
+        <button type="submit">Dodaj</button>
+    </div>
+</form>
+
+<script src="~/js/check.js"></script>

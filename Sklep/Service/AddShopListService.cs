@@ -1,4 +1,5 @@
-﻿using Sklep.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Sklep.Models;
 using Sklep.Service.Interfaces;
 
 namespace Sklep.Service
@@ -17,7 +18,7 @@ namespace Sklep.Service
         }
         public void RemoveFromShopList(ShoppingList list)
         {
-            _context.Remove(list);
+            _context.ShoppingLists.Remove(list);
             _context.SaveChanges();
         }
         public void ExistingShopList(ShoppingList list)
@@ -26,14 +27,15 @@ namespace Sklep.Service
         }
         public List<string> ShowAllShopList()
         {
-            var showAllShopList = _context.ShoppingLists.ToList();
-            List<string> result = new List<string>();
-                                 
-           foreach(var shop in showAllShopList)
+            var users = _context.ShoppingLists.ToList();
+
+            List<string> shopList = new List<string>();
+
+            foreach (var user in users)
             {
-                result.Add(shop.Description);
+                shopList.Add(user.Description);
             }
-           return result;
+            return shopList;
         }
     }
 }

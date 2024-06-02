@@ -10,9 +10,11 @@ namespace Sklep.Controllers
     public class HomeController : Controller
     {
         private readonly IAddShopList _shopList;
-        public HomeController(IAddShopList shopList)
+        private readonly SklepDbContext _context;
+        public HomeController(IAddShopList shopList, SklepDbContext context)
         {
             _shopList = shopList;
+           _context = context;
         }
 
 
@@ -25,33 +27,53 @@ namespace Sklep.Controllers
         {
             return View();
         }
+        [HttpGet]
         public IActionResult Lista() {
-            return View();
+            var showAll = _shopList.ShowAllShopList();
+            if (showAll == null)
+            {
+                return View(showAll);
+            }
+            else
+            {
+                return View(showAll);
+            }
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpPost]
+        public  IActionResult Add(ShoppingList list)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            _shopList.AddToShopList(list);
+           return RedirectToAction("Lista","Home");
         }
-
-        public IActionResult Add(string list)
+       
+        public IActionResult Remove(string shoppingList)
         {
-            ShoppingList shoppingList = new ShoppingList();
-            shoppingList.Description = list;
-            _shopList.AddToShopList(shoppingList);
-            return View();
-        }
-        public IActionResult Remove(ShoppingList list)
-        {
-            _shopList.ExistingShopList(list);
-            _shopList.RemoveFromShopList(list);
-            return View();
+            try
+            {
+                var elementDoUsuniecia = _context.ShoppingLists.FirstOrDefault(u => u.Description == shoppingList);
+                if (elementDoUsuniecia == null)
+                {
+                    return NotFound();
+                }
+                _shopList.RemoveFromShopList(elementDoUsuniecia);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Błąd usuniecia produktu" + ex.Message);
+            }
+            return RedirectToAction("Lista", "Home");
         }
         public IActionResult ShowAll()
         {
             var showAll = _shopList.ShowAllShopList();
-            return View(showAll);
+            if(showAll == null)
+            {
+                return View(showAll);
+            }
+            else
+            {
+                return View(showAll);
+            }
         }
         
     }
