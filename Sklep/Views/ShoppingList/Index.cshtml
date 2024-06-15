@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ShoppingList>
+
+@{
+    ViewData["Title"] = "Lista zakupów";
+}
+
+<h1>Lista zakupów</h1>
+
+<p>
+    <a asp-controller="ShoppingList" asp-action="Create" class="btn btn-primary">Dodaj produkt</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Produkt</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var shoppingList in Model)
+        {
+            <tr>
+                <td style="text-decoration:@(shoppingList.Check ? "line-through" : "none")">
+                    @shoppingList.Description
+                </td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <form asp-action="Edit" asp-route-id="@shoppingList.Id">
+                            <button type="submit" class="btn btn-sm btn-primary">Edytuj</button>
+                        </form>
+                        <form asp-action="Delete" asp-route-id="@shoppingList.Id" onsubmit="return confirm('Czy na pewno chcesz usunąć?');">
+                            <button type="submit" class="btn btn-sm btn-danger">Usuń</button>
+                        </form>
+                        <a asp-action="Details" asp-route-id="@shoppingList.Id" class="btn btn-sm btn-info">Szczegóły</a>
+                        <form asp-action="ToggleCheck" asp-route-id="@shoppingList.Id" method="post">
+                            <button type="submit" class="btn btn-sm btn-outline-primary float-right">
+                                @if (shoppingList.Check)
+                                {
+                                    <text>Odznacz</text>
+                                }
+                                else
+                                {
+                                    <text>Zaznacz</text>
+                                }
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+

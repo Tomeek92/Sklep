@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sklep;
 
@@ -11,9 +12,11 @@ using Sklep;
 namespace Sklep.Migrations
 {
     [DbContext(typeof(SklepDbContext))]
-    partial class SklepDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240615140213_Init123")]
+    partial class Init123
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -230,14 +233,12 @@ namespace Sklep.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OwnerId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("PlannedDate")
+                    b.Property<DateTime?>("PlannedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");

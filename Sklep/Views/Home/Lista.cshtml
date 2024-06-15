@@ -23,10 +23,15 @@ else
 }
 
 <h2>Dodaj nowy produkt</h2>
-<form method="post" asp-action="Add">
+<form id="addForm" method="post" asp-action="Add">
     <div>
         <label for="Description">Opis produktu:</label>
         <input type="text" id="Description" name="Description" required />
+    </div>
+    <div>
+        <label for="PlannedDate">Data zakupów:</label>
+        <input type="date" id="PlannedDate" name="PlannedDate" required />
+        <span id="dateError" class="text-danger"></span>
     </div>
     <div>
         <button type="submit">Dodaj</button>
@@ -34,3 +39,4 @@ else
 </form>
 
 <script src="~/js/check.js"></script>
+<script src="~/js/plannedDate.js"></script>
