@@ -1,0 +1,29 @@
+﻿@model ShoppingList
+
+@{
+    ViewData["Title"] = "Szczegóły pozycji na liście zakupów";
+}
+
+<h1>Szczegóły pozycji na liście zakupów</h1>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Nazwa</dt>
+        <dd class="col-sm-10">@Model.Description</dd>
+
+        <dt class="col-sm-2">Owner Id</dt>
+        <dd class="col-sm-10">@Model.OwnerId</dd>
+
+        <dt class="col-sm-2">Is checked?</dt>
+        <dd class="col-sm-10">@Model.Check </dd>
+
+        <dt class="col-sm-2">Id ownera</dt>
+        <dd class="col-sm-10">@Model.OwnerId</dd>
+        <dt class="col-sm-2">Stworzony</dt>
+        <dd class="col-sm-10">@Model.PlannedDate</dd>
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-primary">Powrót do listy</a>
+</div>

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Sklep;
 using Sklep.Models;
@@ -15,6 +16,19 @@ builder.Services.AddScoped<IAddShopList,AddShopListService>();
 var connectionString = "Server=DESKTOP-JD2U15O\\MSSQL1;Database=Sklep;Integrated Security=True; TrustServerCertificate=true;";
 builder.Services.AddDbContext<SklepDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+    
+})
+.AddEntityFrameworkStores<SklepDbContext>()
+.AddDefaultTokenProviders();
+
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+});
 
 var app = builder.Build();
 

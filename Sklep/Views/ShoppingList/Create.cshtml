@@ -1,0 +1,22 @@
+﻿@model ShoppingList
+
+@{
+    ViewData["Title"] = "Nowa lista zakupów";
+}
+
+<h1>Dodawanie nowego produktu</h1>
+
+<form asp-action="Create" method="post" id="addForm">
+    <div class="form-group">
+        <label asp-for="Description" class="control-label">Opis produktu</label>
+        <input asp-for="Description" class="form-control" required />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="PlannedDate">Data zakupów:</label>
+        <input type="date" id="PlannedDate" name="PlannedDate" required />
+        <span id="dateError" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Utwórz</button>
+</form>
+<script src="~/js/plannedDate.js"></script>
