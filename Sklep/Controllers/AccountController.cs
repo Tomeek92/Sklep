@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Sklep.Models;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Sklep.Controllers
@@ -16,13 +17,13 @@ namespace Sklep.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -42,7 +43,7 @@ namespace Sklep.Controllers
             }
             return View(model);
         }
-
+        
         [HttpGet]
         public IActionResult Login()
         {
@@ -66,8 +67,6 @@ namespace Sklep.Controllers
 
             return View(model);
         }
-
-       
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
